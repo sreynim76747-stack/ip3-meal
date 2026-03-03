@@ -1,1 +1,4374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IP3 MEAL System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@400;600&family=Noto+Sans+Thai:wght@400;600&family=Noto+Sans+Myanmar:wght@400&family=Noto+Sans+Lao:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── TOKENS ─────────────────────────────── */
+      :root {
+        --bg: #f0f4f8;
+        --surface: #ffffff;
+        --surface2: #f7fafb;
+        --border: #e2e8f0;
+        --border2: #cbd5e1;
+        --teal: #0d9488;
+        --teal2: #14b8a6;
+        --teal3: #ccfbf1;
+        --teal4: #f0fdfa;
+        --navy: #0f2744;
+        --navy2: #1e3a5f;
+        --amber: #f59e0b;
+        --amber2: #fef3c7;
+        --red: #ef4444;
+        --red2: #fef2f2;
+        --blue: #3b82f6;
+        --blue2: #eff6ff;
+        --green: #22c55e;
+        --green2: #f0fdf4;
+        --purple: #8b5cf6;
+        --text: #0f172a;
+        --text2: #475569;
+        --text3: #94a3b8;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+        --shadow2:
+          0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
+        --shadow3:
+          0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.06);
+        --r: 12px;
+        --r2: 16px;
+        --r3: 20px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        font-size: 14px;
+      }
+
+      /* ─── SCROLLBAR ──────────────────────────── */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border2);
+        border-radius: 99px;
+      }
+
+      /* ─── LAYOUT ─────────────────────────────── */
+      .shell {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* ─── SIDEBAR ────────────────────────────── */
+      .sidebar {
+        width: 240px;
+        flex-shrink: 0;
+        background: var(--navy);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: width 0.3s;
+        position: relative;
+        z-index: 10;
+      }
+      .sidebar-logo {
+        padding: 20px 20px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .logo-mark {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      .logo-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--teal), var(--teal2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .logo-text {
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.01em;
+      }
+      .logo-text span {
+        color: var(--teal2);
+      }
+      .logo-sub {
+        font-size: 0.68rem;
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .sidebar-nav {
+        flex: 1;
+        padding: 12px 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .nav-section {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        padding: 12px 10px 6px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: 9px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.18s;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+      }
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.07);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .nav-item.active {
+        background: rgba(20, 184, 166, 0.18);
+        color: var(--teal2);
+        font-weight: 600;
+      }
+      .nav-item.active .nav-icon {
+        color: var(--teal2);
+      }
+      .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .nav-badge {
+        margin-left: auto;
+        background: var(--teal);
+        color: #fff;
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 99px;
+      }
+
+      .sidebar-bottom {
+        padding: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .user-card {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .user-av {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--teal), var(--teal2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .user-info {
+        min-width: 0;
+      }
+      .user-name {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .user-role {
+        font-size: 0.65rem;
+        color: rgba(255, 255, 255, 0.4);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Lang strip */
+      .lang-strip {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        padding: 10px 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .lb {
+        padding: 3px 7px;
+        border-radius: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 0.62rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.15s;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        letter-spacing: 0.02em;
+      }
+      .lb:hover {
+        color: var(--teal2);
+        border-color: rgba(20, 184, 166, 0.4);
+      }
+      .lb.on {
+        background: rgba(20, 184, 166, 0.2);
+        color: var(--teal2);
+        border-color: rgba(20, 184, 166, 0.5);
+      }
+
+      /* ─── MAIN ───────────────────────────────── */
+      .main {
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Topbar */
+      .topbar {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 0 28px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        flex-shrink: 0;
+      }
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .page-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .page-crumb {
+        font-size: 0.78rem;
+        color: var(--text3);
+      }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .kobo-status {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 99px;
+        background: var(--green2);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #16a34a;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .kobo-status:hover {
+        background: #dcfce7;
+      }
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+        animation: pulse 2s infinite;
+      }
+      .kobo-status.disconnected {
+        background: var(--red2);
+        border-color: rgba(239, 68, 68, 0.2);
+        color: var(--red);
+      }
+      .kobo-status.disconnected .status-dot {
+        background: var(--red);
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+      }
+      .topbar-btn {
+        padding: 7px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text2);
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.18s;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .topbar-btn:hover {
+        background: var(--bg);
+        border-color: var(--border2);
+      }
+
+      /* ─── PAGE CONTENT ───────────────────────── */
+      .page-content {
+        flex: 1;
+        padding: 28px;
+        display: none;
+      }
+      .page-content.active {
+        display: block;
+      }
+
+      /* ─── HOME / DASHBOARD ───────────────────── */
+      .dash-welcome {
+        background: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--navy2) 60%,
+          #1a4a6b 100%
+        );
+        border-radius: var(--r3);
+        padding: 32px 36px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow: hidden;
+        position: relative;
+      }
+      .dash-welcome::before {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(20, 184, 166, 0.2),
+          transparent 70%
+        );
+      }
+      .dash-welcome::after {
+        content: "";
+        position: absolute;
+        right: 80px;
+        bottom: -40px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(245, 158, 11, 0.1),
+          transparent 70%
+        );
+      }
+      .welcome-text h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 6px;
+      }
+      .welcome-text p {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.6;
+        max-width: 460px;
+      }
+      .welcome-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+      .btn-white {
+        padding: 9px 20px;
+        border-radius: 9px;
+        border: none;
+        background: #fff;
+        color: var(--navy);
+        font-weight: 700;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .btn-white:hover {
+        background: var(--teal3);
+        color: var(--teal);
+      }
+      .btn-outline-white {
+        padding: 9px 20px;
+        border-radius: 9px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: transparent;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 600;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: 0.2s;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .btn-outline-white:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .welcome-flags {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+      }
+      .flag-chip {
+        padding: 6px 12px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 500;
+      }
+
+      /* KPI cards */
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .kpi-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 20px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        transition: box-shadow 0.2s;
+      }
+      .kpi-card:hover {
+        box-shadow: var(--shadow2);
+      }
+      .kpi-ico {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .kpi-ico.t {
+        background: var(--teal3);
+      }
+      .kpi-ico.a {
+        background: var(--amber2);
+      }
+      .kpi-ico.b {
+        background: var(--blue2);
+      }
+      .kpi-ico.g {
+        background: var(--green2);
+      }
+      .kpi-num {
+        font-size: 1.6rem;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--text);
+      }
+      .kpi-lbl {
+        font-size: 0.72rem;
+        color: var(--text3);
+        margin-top: 3px;
+      }
+      .kpi-delta {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--green);
+        margin-top: 6px;
+      }
+
+      /* Pillars */
+      .pillars-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .pillar-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 22px;
+        cursor: pointer;
+        transition: all 0.22s;
+        position: relative;
+        overflow: hidden;
+      }
+      .pillar-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--teal), var(--teal2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: 0.25s;
+      }
+      .pillar-card:hover {
+        box-shadow: var(--shadow2);
+        border-color: var(--teal2);
+        transform: translateY(-2px);
+      }
+      .pillar-card:hover::before {
+        transform: scaleX(1);
+      }
+      .pillar-card.amber::before {
+        background: linear-gradient(90deg, var(--amber), #fbbf24);
+      }
+      .pillar-card.red::before {
+        background: linear-gradient(90deg, var(--red), #f87171);
+      }
+      .pillar-icon2 {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+      .pillar-name {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .pillar-desc {
+        font-size: 0.78rem;
+        color: var(--text2);
+        line-height: 1.6;
+        margin-bottom: 14px;
+      }
+      .pillar-link {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--teal);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Charts row */
+      .charts-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .chart-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 22px;
+      }
+      .chart-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .chart-sub {
+        font-size: 0.72rem;
+        color: var(--text3);
+        margin-bottom: 18px;
+      }
+
+      /* Simple bar chart */
+      .bar-chart {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .bar-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .bar-label {
+        font-size: 0.72rem;
+        color: var(--text2);
+        width: 100px;
+        flex-shrink: 0;
+        font-weight: 500;
+      }
+      .bar-track {
+        flex: 1;
+        height: 8px;
+        background: var(--bg);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        border-radius: 99px;
+        background: linear-gradient(90deg, var(--teal), var(--teal2));
+        transition: width 1s cubic-bezier(0.2, 0.8, 0.3, 1);
+      }
+      .bar-fill.amber {
+        background: linear-gradient(90deg, var(--amber), #fbbf24);
+      }
+      .bar-fill.blue {
+        background: linear-gradient(90deg, var(--blue), #60a5fa);
+      }
+      .bar-val {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text);
+        width: 36px;
+        text-align: right;
+      }
+
+      /* Donut chart */
+      .donut-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      .donut {
+        position: relative;
+        width: 130px;
+        height: 130px;
+      }
+      .donut svg {
+        transform: rotate(-90deg);
+      }
+      .donut-center {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .donut-num {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .donut-sub {
+        font-size: 0.6rem;
+        color: var(--text3);
+      }
+      .donut-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+      .dl-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.72rem;
+      }
+      .dl-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dl-name {
+        color: var(--text2);
+        flex: 1;
+      }
+      .dl-val {
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      /* ─── FORM PAGE ──────────────────────────── */
+      .form-layout {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 20px;
+        align-items: start;
+      }
+      .form-main {
+      }
+      .form-sidebar-panel {
+        position: sticky;
+        top: 20px;
+      }
+
+      /* Form type switcher */
+      .ftype-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .ftype-card {
+        padding: 14px 16px;
+        border-radius: var(--r);
+        border: 2px solid var(--border);
+        background: var(--surface);
+        cursor: pointer;
+        transition: all 0.18s;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .ftype-card:hover {
+        border-color: var(--teal2);
+        background: var(--teal4);
+      }
+      .ftype-card.on {
+        border-color: var(--teal);
+        background: var(--teal4);
+      }
+      .ftype-ico {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .ftype-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .ftype-desc {
+        font-size: 0.68rem;
+        color: var(--text3);
+        margin-top: 1px;
+      }
+
+      /* Progress bar */
+      .progress-bar {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 22px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 99px;
+        padding: 6px 8px;
+      }
+      .prog-step {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text3);
+        transition: 0.2s;
+        cursor: default;
+        white-space: nowrap;
+      }
+      .prog-step.done {
+        color: var(--teal);
+      }
+      .prog-step.active {
+        background: var(--teal);
+        color: #fff;
+      }
+      .prog-step.done .pn {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+      }
+      .pn {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid currentColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .prog-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+        min-width: 8px;
+      }
+
+      /* Form card */
+      .fcard {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        margin-bottom: 14px;
+        overflow: hidden;
+        animation: slideUp 0.3s ease both;
+      }
+      .fcard-head {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .fcard-head-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: var(--teal3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .fcard-head-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .fcard-head-sub {
+        font-size: 0.7rem;
+        color: var(--text3);
+      }
+      .fcard-body {
+        padding: 20px;
+      }
+
+      /* Field grid */
+      .fg {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      .fg.c2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .fg.c3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .fg.c1 {
+        grid-template-columns: 1fr;
+      }
+
+      /* Field */
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .field-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text2);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .req {
+        color: var(--red);
+      }
+      .field-hint {
+        font-size: 0.68rem;
+        color: var(--text3);
+        font-style: italic;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        padding: 10px 13px;
+        border-radius: 9px;
+        border: 1.5px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.84rem;
+        outline: none;
+        transition:
+          border-color 0.18s,
+          box-shadow 0.18s;
+        -webkit-appearance: none;
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+      }
+      .field input.error,
+      .field select.error,
+      .field textarea.error {
+        border-color: var(--red);
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+      }
+      .field textarea {
+        min-height: 90px;
+        resize: vertical;
+        line-height: 1.6;
+      }
+      .field input[type="file"] {
+        padding: 8px 12px;
+        color: var(--text3);
+        cursor: pointer;
+      }
+      .field input[readonly] {
+        background: var(--bg);
+        color: var(--text3);
+      }
+      .field select option {
+        background: var(--surface);
+      }
+      .err-msg {
+        font-size: 0.68rem;
+        color: var(--red);
+        font-weight: 500;
+        margin-top: 2px;
+      }
+
+      /* GPS row */
+      .gps-row {
+        display: flex;
+        gap: 8px;
+      }
+      .gps-row input {
+        flex: 1;
+      }
+      .btn-gps {
+        padding: 10px 14px;
+        border-radius: 9px;
+        border: 1.5px solid var(--border);
+        background: var(--surface);
+        color: var(--teal);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.18s;
+        white-space: nowrap;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .btn-gps:hover {
+        background: var(--teal4);
+        border-color: var(--teal2);
+      }
+
+      /* Tags */
+      .tag-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 4px;
+      }
+      .tag {
+        padding: 5px 12px;
+        border-radius: 99px;
+        font-size: 0.74rem;
+        font-weight: 600;
+        border: 1.5px solid var(--border);
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.15s;
+        background: var(--surface);
+      }
+      .tag:hover {
+        border-color: var(--teal2);
+        color: var(--teal);
+      }
+      .tag.on {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+      }
+
+      /* Radio group */
+      .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .radio-opt {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 14px;
+        border-radius: 9px;
+        border: 1.5px solid var(--border);
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: 0.15s;
+      }
+      .radio-opt:hover {
+        border-color: var(--teal2);
+        background: var(--teal4);
+      }
+      .radio-opt input {
+        accent-color: var(--teal);
+      }
+
+      /* Range */
+      .range-wrap {
+        margin-top: 6px;
+      }
+      .range-wrap input[type="range"] {
+        width: 100%;
+        accent-color: var(--teal);
+        height: 5px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      .range-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.65rem;
+        color: var(--text3);
+        margin-top: 4px;
+      }
+
+      /* Consent toggle */
+      .consent-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        background: var(--teal4);
+        border: 1.5px solid rgba(13, 148, 136, 0.2);
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 4px;
+      }
+      .toggle {
+        width: 38px;
+        height: 22px;
+        border-radius: 99px;
+        background: var(--border2);
+        position: relative;
+        flex-shrink: 0;
+        transition: 0.25s;
+      }
+      .toggle.on {
+        background: var(--teal);
+      }
+      .toggle-k {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        transition: 0.25s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .toggle.on .toggle-k {
+        left: 19px;
+      }
+      .consent-text {
+        font-size: 0.78rem;
+        color: var(--text2);
+        line-height: 1.55;
+      }
+      .consent-text strong {
+        color: var(--text);
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      /* Indicator rows */
+      .ind-row {
+        padding: 14px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--surface2);
+        margin-bottom: 10px;
+      }
+      .ind-row-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .ind-id {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 5px;
+        background: var(--teal3);
+        color: var(--teal);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+      .ind-name {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .ind-target {
+        font-size: 0.7rem;
+        color: var(--text3);
+      }
+      .ind-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr;
+        gap: 10px;
+      }
+
+      /* Form actions */
+      .form-actions {
+        display: flex;
+        gap: 10px;
+        padding: 16px 20px;
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: 0 0 var(--r2) var(--r2);
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 10px 22px;
+        border-radius: 9px;
+        border: none;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-weight: 700;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.18s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .btn-primary {
+        background: var(--teal);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--teal2);
+        box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+      }
+      .btn-secondary {
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        color: var(--text2);
+      }
+      .btn-secondary:hover {
+        background: var(--border);
+        color: var(--text);
+      }
+      .btn-danger {
+        background: var(--red2);
+        border: 1.5px solid rgba(239, 68, 68, 0.2);
+        color: var(--red);
+      }
+      .btn-danger:hover {
+        background: #fecaca;
+      }
+      .btn-kobo {
+        background: var(--blue2);
+        border: 1.5px solid rgba(59, 130, 246, 0.2);
+        color: var(--blue);
+      }
+      .btn-kobo:hover {
+        background: #dbeafe;
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1.5px solid var(--border);
+        color: var(--text3);
+      }
+      .btn-ghost:hover {
+        background: var(--bg);
+        color: var(--text2);
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      /* Form sidebar panel */
+      .panel-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: 18px;
+        margin-bottom: 14px;
+      }
+      .panel-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .kobo-cfg {
+      }
+      .kobo-field {
+        margin-bottom: 10px;
+      }
+      .kobo-field label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .kobo-field input {
+        width: 100%;
+        padding: 8px 11px;
+        border-radius: 8px;
+        border: 1.5px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.8rem;
+        outline: none;
+        transition: 0.15s;
+      }
+      .kobo-field input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+      .kobo-field input[type="password"] {
+        letter-spacing: 0.08em;
+      }
+      .conn-status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+      .conn-status.ok {
+        background: var(--green2);
+        color: #16a34a;
+      }
+      .conn-status.err {
+        background: var(--red2);
+        color: var(--red);
+      }
+      .conn-status.idle {
+        background: var(--bg);
+        color: var(--text3);
+      }
+      .cs-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        flex-shrink: 0;
+      }
+
+      /* Offline notice */
+      .offline-notice {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--amber2);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 9px;
+        font-size: 0.76rem;
+        color: #92400e;
+        margin-bottom: 14px;
+        font-weight: 500;
+      }
+
+      /* Submission log in panel */
+      .sub-log {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .sub-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: var(--bg);
+        font-size: 0.72rem;
+      }
+      .sub-item-icon {
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .sub-item-text {
+        color: var(--text2);
+        line-height: 1.5;
+      }
+      .sub-item-text strong {
+        color: var(--text);
+        display: block;
+      }
+      .sub-item-time {
+        font-size: 0.65rem;
+        color: var(--text3);
+        margin-top: 2px;
+      }
+
+      /* ─── ACTIVITY LOG ───────────────────────── */
+      .log-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .log-search {
+        position: relative;
+        flex: 1;
+        max-width: 340px;
+      }
+      .log-search input {
+        width: 100%;
+        padding: 9px 14px 9px 38px;
+        border-radius: 9px;
+        border: 1.5px solid var(--border);
+        background: var(--surface);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.82rem;
+        color: var(--text);
+        outline: none;
+        transition: 0.15s;
+      }
+      .log-search input:focus {
+        border-color: var(--teal);
+      }
+      .log-search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text3);
+        font-size: 14px;
+      }
+      .log-filters {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .fchip {
+        padding: 6px 13px;
+        border-radius: 99px;
+        border: 1.5px solid var(--border);
+        background: var(--surface);
+        color: var(--text3);
+        font-size: 0.72rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.15s;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .fchip:hover {
+        border-color: var(--border2);
+        color: var(--text2);
+      }
+      .fchip.on {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+      }
+
+      /* Log KPIs */
+      .log-kpis {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .lkpi {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .lkpi-ico {
+        font-size: 18px;
+      }
+      .lkpi-n {
+        font-size: 1.25rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .lkpi-l {
+        font-size: 0.65rem;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      /* Log table */
+      .log-table {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        overflow: hidden;
+      }
+      .lt-head {
+        display: grid;
+        grid-template-columns: 180px 90px 1fr 120px 100px 80px;
+        padding: 11px 20px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text3);
+      }
+      .lt-row {
+        display: grid;
+        grid-template-columns: 180px 90px 1fr 120px 100px 80px;
+        padding: 13px 20px;
+        border-bottom: 1px solid var(--border);
+        align-items: center;
+        transition: background 0.12s;
+        animation: slideUp 0.25s ease both;
+      }
+      .lt-row:last-child {
+        border-bottom: none;
+      }
+      .lt-row:hover {
+        background: var(--bg);
+      }
+      .lu {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .lav {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+      .lav.c1 {
+        background: #ccfbf1;
+        color: #0f766e;
+      }
+      .lav.c2 {
+        background: #fef3c7;
+        color: #b45309;
+      }
+      .lav.c3 {
+        background: #fce7f3;
+        color: #9d174d;
+      }
+      .lav.c4 {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .lav.c5 {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+      .lu-n {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .lu-r {
+        font-size: 0.66rem;
+        color: var(--text3);
+      }
+
+      .abadge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 9px;
+        border-radius: 6px;
+        font-size: 0.67rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .abadge.cr {
+        background: var(--teal3);
+        color: var(--teal);
+      }
+      .abadge.ed {
+        background: var(--amber2);
+        color: #b45309;
+      }
+      .abadge.dl {
+        background: var(--red2);
+        color: var(--red);
+      }
+      .abadge.vw {
+        background: var(--blue2);
+        color: var(--blue);
+      }
+      .abadge.sb {
+        background: var(--green2);
+        color: #15803d;
+      }
+      .abadge.up {
+        background: #ede9fe;
+        color: var(--purple);
+      }
+
+      .ld {
+        font-size: 0.78rem;
+        color: var(--text2);
+        line-height: 1.4;
+      }
+      .ld .ht {
+        color: var(--teal);
+        font-weight: 600;
+      }
+      .lt-time {
+        font-size: 0.72rem;
+        color: var(--text3);
+      }
+      .lt-ctry .ctg {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        background: var(--teal3);
+        color: var(--teal);
+      }
+      .lt-form .ftg {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        background: var(--bg);
+        color: var(--text3);
+      }
+
+      /* ─── KOBO API MODAL ─────────────────────── */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(15, 39, 68, 0.5);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s;
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        background: var(--surface);
+        border-radius: var(--r3);
+        padding: 30px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: var(--shadow3);
+        transform: scale(0.94) translateY(10px);
+        transition: 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
+      }
+      .modal-overlay.open .modal {
+        transform: scale(1) translateY(0);
+      }
+      .modal-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .modal-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--blue2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+      .modal-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .modal-sub {
+        font-size: 0.78rem;
+        color: var(--text3);
+        margin-top: 2px;
+      }
+      .modal-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .modal-field label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--text3);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        display: block;
+        margin-bottom: 5px;
+      }
+      .modal-field input {
+        width: 100%;
+        padding: 10px 13px;
+        border-radius: 9px;
+        border: 1.5px solid var(--border);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.84rem;
+        color: var(--text);
+        outline: none;
+        transition: 0.15s;
+        background: var(--surface);
+      }
+      .modal-field input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+      .modal-status {
+        padding: 10px 14px;
+        border-radius: 9px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        display: none;
+      }
+      .modal-status.ok {
+        background: var(--green2);
+        color: #15803d;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .modal-status.err {
+        background: var(--red2);
+        color: var(--red);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .modal-status.loading {
+        background: var(--bg);
+        color: var(--text3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      /* Toast */
+      .toast-wrap {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+      }
+      .toast {
+        padding: 12px 18px;
+        border-radius: 11px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        box-shadow: var(--shadow3);
+        transform: translateX(80px);
+        opacity: 0;
+        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 320px;
+      }
+      .toast.show {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: all;
+      }
+      .toast.success {
+        background: var(--green);
+        color: #fff;
+      }
+      .toast.error {
+        background: var(--red);
+        color: #fff;
+      }
+      .toast.info {
+        background: var(--navy);
+        color: #fff;
+      }
+      .toast.warning {
+        background: var(--amber);
+        color: #fff;
+      }
+
+      /* Empty state */
+      .empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px;
+        color: var(--text3);
+      }
+      .empty-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      .empty-text {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text2);
+      }
+      .empty-sub {
+        font-size: 0.75rem;
+        margin-top: 4px;
+      }
+
+      /* Animations */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.1);
+        }
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .spin {
+        animation: spin 0.8s linear infinite;
+        display: inline-block;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .kpi-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .form-layout {
+          grid-template-columns: 1fr;
+        }
+        .form-sidebar-panel {
+          position: static;
+        }
+        .lt-head,
+        .lt-row {
+          grid-template-columns: 150px 80px 1fr 100px;
+        }
+        .lt-head > *:nth-child(5),
+        .lt-head > *:nth-child(6),
+        .lt-row > *:nth-child(5),
+        .lt-row > *:nth-child(6) {
+          display: none;
+        }
+        .log-kpis {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .charts-row {
+          grid-template-columns: 1fr;
+        }
+        .pillars-row {
+          grid-template-columns: 1fr;
+        }
+        .ftype-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .sidebar {
+          display: none;
+        }
+        .kpi-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .log-kpis {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- ═══════ SIDEBAR ═══════ -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-mark">
+            <div class="logo-icon">🌊</div>
+            <div class="logo-text">IP3 <span>MEAL</span></div>
+          </div>
+          <div class="logo-sub">Mekong Water Governance</div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-section">Main</div>
+          <button class="nav-item active" onclick="nav('dashboard', this)">
+            <span class="nav-icon">📊</span>
+            <span class="tx" data-k="nav_dash">Dashboard</span>
+          </button>
+          <button class="nav-item" onclick="nav('form', this)">
+            <span class="nav-icon">📋</span>
+            <span class="tx" data-k="nav_form">Data Entry</span>
+            <span class="nav-badge">4</span>
+          </button>
+          <button class="nav-item" onclick="nav('log', this)">
+            <span class="nav-icon">📜</span>
+            <span class="tx" data-k="nav_log">Activity Log</span>
+          </button>
+
+          <div class="nav-section" style="margin-top: 8px">Programme</div>
+          <button
+            class="nav-item"
+            onclick="
+              nav('dashboard', this);
+              setTimeout(() => scrollTo(0, 400), 100);
+            "
+          >
+            <span class="nav-icon">💧</span>
+            <span class="tx" data-k="p1t">Water Governance</span>
+          </button>
+          <button
+            class="nav-item"
+            onclick="
+              nav('dashboard', this);
+              setTimeout(() => scrollTo(0, 400), 100);
+            "
+          >
+            <span class="nav-icon">🌤️</span>
+            <span class="tx" data-k="p2t">Climate Resilience</span>
+          </button>
+          <button
+            class="nav-item"
+            onclick="
+              nav('dashboard', this);
+              setTimeout(() => scrollTo(0, 400), 100);
+            "
+          >
+            <span class="nav-icon">⚖️</span>
+            <span class="tx" data-k="p3t">Social Equity</span>
+          </button>
+
+          <div class="nav-section" style="margin-top: 8px">System</div>
+          <button class="nav-item" onclick="openKoboModal()">
+            <span class="nav-icon">🔗</span>
+            KoboToolbox API
+          </button>
+          <button
+            class="nav-item"
+            onclick="showToast('Settings coming soon', 'info')"
+          >
+            <span class="nav-icon">⚙️</span>
+            Settings
+          </button>
+        </nav>
+
+        <div class="lang-strip">
+          <button class="lb on" onclick="setLang('en', this)">EN</button>
+          <button class="lb" onclick="setLang('km', this)">ខ្មែរ</button>
+          <button class="lb" onclick="setLang('lo', this)">ລາວ</button>
+          <button class="lb" onclick="setLang('my', this)">မြန်မာ</button>
+          <button class="lb" onclick="setLang('th', this)">ไทย</button>
+          <button class="lb" onclick="setLang('vi', this)">Việt</button>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="user-card">
+            <div class="user-av">SR</div>
+            <div class="user-info">
+              <div class="user-name">Sophea Rith</div>
+              <div class="user-role">MEAL Officer · Cambodia</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ═══════ MAIN ═══════ -->
+      <div class="main">
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="topbar-left">
+            <span class="page-title tx" data-k="nav_dash" id="topbar-title"
+              >Dashboard</span
+            >
+            <span class="page-crumb">· IP3 Programme 2026</span>
+          </div>
+          <div class="topbar-right">
+            <div
+              class="kobo-status disconnected"
+              id="kobo-topbar"
+              onclick="openKoboModal()"
+            >
+              <div class="status-dot"></div>
+              <span id="kobo-status-text">KoboToolbox — Not Connected</span>
+            </div>
+            <button class="topbar-btn" onclick="openKoboModal()">
+              🔗 Connect API
+            </button>
+          </div>
+        </div>
+
+        <!-- ══════ DASHBOARD PAGE ══════ -->
+        <div class="page-content active" id="page-dashboard">
+          <!-- Welcome banner -->
+          <div class="dash-welcome">
+            <div class="welcome-text">
+              <h1 class="tx" data-k="welcome_h">Welcome to IP3 MEAL System</h1>
+              <p class="tx" data-k="welcome_p">
+                Centralized monitoring, evaluation, accountability and learning
+                across five Mekong nations. Connect to KoboToolbox to start
+                syncing field data.
+              </p>
+              <div class="welcome-actions">
+                <button
+                  class="btn-white"
+                  onclick="
+                    nav('form', document.querySelectorAll('.nav-item')[1])
+                  "
+                >
+                  + <span class="tx" data-k="new_entry">New Data Entry</span>
+                </button>
+                <button class="btn-outline-white" onclick="openKoboModal()">
+                  🔗 Connect KoboToolbox
+                </button>
+              </div>
+            </div>
+            <div class="welcome-flags">
+              <div class="flag-chip">🇰🇭 KH</div>
+              <div class="flag-chip">🇱🇦 LA</div>
+              <div class="flag-chip">🇲🇲 MM</div>
+              <div class="flag-chip">🇹🇭 TH</div>
+              <div class="flag-chip">🇻🇳 VN</div>
+            </div>
+          </div>
+
+          <!-- KPIs -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-ico t">👥</div>
+              <div>
+                <div class="kpi-num">3,847</div>
+                <div class="kpi-lbl tx" data-k="kpi1">People Reached</div>
+                <div class="kpi-delta">↑ 12% this quarter</div>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-ico a">📅</div>
+              <div>
+                <div class="kpi-num">142</div>
+                <div class="kpi-lbl tx" data-k="kpi2">Events Recorded</div>
+                <div class="kpi-delta">↑ 8 this month</div>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-ico b">📊</div>
+              <div>
+                <div class="kpi-num">68%</div>
+                <div class="kpi-lbl tx" data-k="kpi3">Indicator Progress</div>
+                <div class="kpi-delta">vs 45% target</div>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-ico g">⚤</div>
+              <div>
+                <div class="kpi-num">54%</div>
+                <div class="kpi-lbl tx" data-k="kpi4">Female Participation</div>
+                <div class="kpi-delta">↑ 3% vs last period</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillar cards -->
+          <div class="pillars-row">
+            <div class="pillar-card" onclick="goForm('event')">
+              <div class="pillar-icon2">💧</div>
+              <div class="pillar-name tx" data-k="p1t">
+                Inclusive Water Governance
+              </div>
+              <div class="pillar-desc tx" data-k="p1d">
+                Track water access, governance policies, and community
+                engagement across the Mekong basin.
+              </div>
+              <div class="pillar-link">Enter Data <span>→</span></div>
+            </div>
+            <div class="pillar-card amber" onclick="goForm('survey')">
+              <div class="pillar-icon2">🌤️</div>
+              <div class="pillar-name tx" data-k="p2t">Climate Resilience</div>
+              <div class="pillar-desc tx" data-k="p2d">
+                Document climate adaptation activities and environmental
+                indicators linked to Power BI dashboards.
+              </div>
+              <div class="pillar-link" style="color: var(--amber)">
+                Enter Data <span>→</span>
+              </div>
+            </div>
+            <div class="pillar-card red" onclick="goForm('participant')">
+              <div class="pillar-icon2">⚖️</div>
+              <div class="pillar-name tx" data-k="p3t">Social Equity</div>
+              <div class="pillar-desc tx" data-k="p3d">
+                Capture GEDSI markers, disaggregated reach data, and stories of
+                change with inclusive reporting.
+              </div>
+              <div class="pillar-link" style="color: var(--red)">
+                Enter Data <span>→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="charts-row">
+            <div class="chart-card">
+              <div class="chart-title tx" data-k="chart1_t">
+                Indicator Progress vs Target
+              </div>
+              <div class="chart-sub tx" data-k="chart1_s">
+                Q1 2026 · All 5 countries combined
+              </div>
+              <div class="bar-chart" id="bar-chart"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title tx" data-k="chart2_t">
+                Participants by Gender
+              </div>
+              <div class="chart-sub tx" data-k="chart2_s">
+                Current reporting period
+              </div>
+              <div class="donut-wrap">
+                <div class="donut">
+                  <svg width="130" height="130" viewBox="0 0 130 130">
+                    <circle
+                      cx="65"
+                      cy="65"
+                      r="50"
+                      fill="none"
+                      stroke="#e2e8f0"
+                      stroke-width="18"
+                    />
+                    <circle
+                      cx="65"
+                      cy="65"
+                      r="50"
+                      fill="none"
+                      stroke="#0d9488"
+                      stroke-width="18"
+                      stroke-dasharray="170 144"
+                      stroke-linecap="round"
+                    />
+                    <circle
+                      cx="65"
+                      cy="65"
+                      r="50"
+                      fill="none"
+                      stroke="#3b82f6"
+                      stroke-width="18"
+                      stroke-dasharray="120 194"
+                      stroke-dashoffset="-170"
+                      stroke-linecap="round"
+                    />
+                    <circle
+                      cx="65"
+                      cy="65"
+                      r="50"
+                      fill="none"
+                      stroke="#f59e0b"
+                      stroke-width="18"
+                      stroke-dasharray="24 290"
+                      stroke-dashoffset="-290"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <div class="donut-center">
+                    <div class="donut-num">3,847</div>
+                    <div class="donut-sub">Total</div>
+                  </div>
+                </div>
+                <div class="donut-legend">
+                  <div class="dl-item">
+                    <div class="dl-dot" style="background: var(--teal)"></div>
+                    <div class="dl-name">Female</div>
+                    <div class="dl-val">54%</div>
+                  </div>
+                  <div class="dl-item">
+                    <div class="dl-dot" style="background: var(--blue)"></div>
+                    <div class="dl-name">Male</div>
+                    <div class="dl-val">38%</div>
+                  </div>
+                  <div class="dl-item">
+                    <div class="dl-dot" style="background: var(--amber)"></div>
+                    <div class="dl-name">Other/N/A</div>
+                    <div class="dl-val">8%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════ FORM PAGE ══════ -->
+        <div class="page-content" id="page-form">
+          <div class="form-layout">
+            <div class="form-main">
+              <!-- Form type selector -->
+              <div class="ftype-grid">
+                <div
+                  class="ftype-card on"
+                  id="ft-event"
+                  onclick="switchForm('event', this)"
+                >
+                  <div class="ftype-ico">📅</div>
+                  <div>
+                    <div class="ftype-label tx" data-k="ft1">
+                      Event & Activity
+                    </div>
+                    <div class="ftype-desc tx" data-k="ft1d">
+                      Workshops, field visits, meetings
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ftype-card"
+                  id="ft-participant"
+                  onclick="switchForm('participant', this)"
+                >
+                  <div class="ftype-ico">👤</div>
+                  <div>
+                    <div class="ftype-label tx" data-k="ft2">
+                      Participant Registration
+                    </div>
+                    <div class="ftype-desc tx" data-k="ft2d">
+                      Individual profiles & consent
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ftype-card"
+                  id="ft-survey"
+                  onclick="switchForm('survey', this)"
+                >
+                  <div class="ftype-ico">📊</div>
+                  <div>
+                    <div class="ftype-label tx" data-k="ft3">
+                      Community Survey
+                    </div>
+                    <div class="ftype-desc tx" data-k="ft3d">
+                      Water access & climate questions
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ftype-card"
+                  id="ft-indicator"
+                  onclick="switchForm('indicator', this)"
+                >
+                  <div class="ftype-ico">📈</div>
+                  <div>
+                    <div class="ftype-label tx" data-k="ft4">
+                      Indicator Monitoring
+                    </div>
+                    <div class="ftype-desc tx" data-k="ft4d">
+                      Quarterly IP3 indicator values
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Offline notice -->
+              <div class="offline-notice">
+                <span>📡</span>
+                <span class="tx" data-k="offline"
+                  >Offline-ready — data saved locally and synced when connected.
+                  Supports all 5 countries including remote areas.</span
+                >
+              </div>
+
+              <!-- ── EVENT FORM ── -->
+              <div id="form-event">
+                <div class="progress-bar">
+                  <div class="prog-step done">
+                    <div class="pn">✓</div>
+                    <span class="tx" data-k="step1">Event Info</span>
+                  </div>
+                  <div class="prog-line"></div>
+                  <div class="prog-step active">
+                    <div class="pn">2</div>
+                    <span class="tx" data-k="step2">Participants</span>
+                  </div>
+                  <div class="prog-line"></div>
+                  <div class="prog-step">
+                    <div class="pn">3</div>
+                    <span class="tx" data-k="step3">Narrative</span>
+                  </div>
+                  <div class="prog-line"></div>
+                  <div class="prog-step">
+                    <div class="pn">4</div>
+                    <span class="tx" data-k="step4">Submit</span>
+                  </div>
+                </div>
+
+                <!-- Section A -->
+                <div class="fcard">
+                  <div class="fcard-head">
+                    <div class="fcard-head-icon">📍</div>
+                    <div>
+                      <div class="fcard-head-title tx" data-k="sec_a">
+                        A — Event Information
+                      </div>
+                      <div class="fcard-head-sub tx" data-k="sec_a_sub">
+                        Basic event details and location
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fcard-body">
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">Event ID</div>
+                        <input value="EVT-2026-0314" readonly />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          Date <span class="req">*</span>
+                        </div>
+                        <input type="date" id="ev-date" value="2026-03-03" />
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="event_title"
+                            >Event Title</span
+                          >
+                          <span class="req">*</span>
+                        </div>
+                        <input
+                          id="ev-title"
+                          type="text"
+                          placeholder="e.g. Community Water Governance Workshop"
+                        />
+                      </div>
+                    </div>
+                    <div class="fg c3">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="country">Country</span>
+                          <span class="req">*</span>
+                        </div>
+                        <select
+                          id="ev-country"
+                          onchange="updateProvince('ev-province', this.value)"
+                        >
+                          <option value="KH">🇰🇭 Cambodia</option>
+                          <option value="LA">🇱🇦 Lao PDR</option>
+                          <option value="MM">🇲🇲 Myanmar</option>
+                          <option value="TH">🇹🇭 Thailand</option>
+                          <option value="VN">🇻🇳 Vietnam</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="province">Province</span>
+                        </div>
+                        <select id="ev-province"></select>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="pillar">Pillar</span>
+                          <span class="req">*</span>
+                        </div>
+                        <select id="ev-pillar">
+                          <option>Water Governance</option>
+                          <option>Climate Resilience</option>
+                          <option>Social Equity</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="event_type">Event Type</span>
+                        </div>
+                        <select id="ev-type">
+                          <option>Training / Workshop</option>
+                          <option>Community Meeting</option>
+                          <option>Field Survey</option>
+                          <option>Monitoring Visit</option>
+                          <option>Stakeholder Consultation</option>
+                          <option>Awareness Campaign</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="partner"
+                            >Implementing Partner</span
+                          >
+                        </div>
+                        <input
+                          id="ev-partner"
+                          type="text"
+                          placeholder="Organization name"
+                        />
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">GPS Location</div>
+                        <div class="gps-row">
+                          <input
+                            id="ev-gps"
+                            type="text"
+                            placeholder="Lat, Long — tap Capture to auto-detect"
+                          />
+                          <button
+                            class="btn-gps"
+                            onclick="captureGPS('ev-gps')"
+                          >
+                            📍 <span class="tx" data-k="capture">Capture</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Section B -->
+                <div class="fcard">
+                  <div class="fcard-head">
+                    <div class="fcard-head-icon">👥</div>
+                    <div>
+                      <div class="fcard-head-title tx" data-k="sec_b">
+                        B — Participants & GEDSI
+                      </div>
+                      <div class="fcard-head-sub">
+                        Disaggregated data for inclusive reporting
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fcard-body">
+                    <div class="fg c3">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="total">Total</span>
+                          <span class="req">*</span>
+                        </div>
+                        <input
+                          id="ev-total"
+                          type="number"
+                          min="0"
+                          placeholder="0"
+                        />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="female">Female</span>
+                        </div>
+                        <input
+                          id="ev-female"
+                          type="number"
+                          min="0"
+                          placeholder="0"
+                        />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="male">Male</span>
+                        </div>
+                        <input
+                          id="ev-male"
+                          type="number"
+                          min="0"
+                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+                    <div class="fg c3">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="youth">Youth 15–35</span>
+                        </div>
+                        <input type="number" min="0" placeholder="0" />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="indigenous">Indigenous</span>
+                        </div>
+                        <input type="number" min="0" placeholder="0" />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="pwd"
+                            >Persons w/ Disability</span
+                          >
+                        </div>
+                        <input type="number" min="0" placeholder="0" />
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="field-label">
+                        <span class="tx" data-k="gedsi_markers"
+                          >GEDSI Markers</span
+                        >
+                      </div>
+                      <div class="tag-wrap">
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Gender Responsive</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Women-Led</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Youth-Focused</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Disability Inclusive</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Ethnic Minority</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Indigenous Rights</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Marginalized Communities</span
+                        >
+                      </div>
+                    </div>
+                    <div class="fg c1" style="margin-top: 14px">
+                      <div class="field">
+                        <div class="field-label">Attendance List</div>
+                        <input type="file" accept=".pdf,.xlsx,.csv,.jpg,.png" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Section C -->
+                <div class="fcard">
+                  <div class="fcard-head">
+                    <div class="fcard-head-icon">📝</div>
+                    <div>
+                      <div class="fcard-head-title tx" data-k="sec_c">
+                        C — Narrative & Evidence
+                      </div>
+                      <div class="fcard-head-sub">
+                        Qualitative data and supporting documents
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fcard-body">
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="summary"
+                            >Activity Summary</span
+                          >
+                          <span class="req">*</span>
+                        </div>
+                        <textarea
+                          id="ev-summary"
+                          placeholder="Describe what happened, who was involved, and key outcomes achieved..."
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="story">Story of Change</span>
+                        </div>
+                        <textarea
+                          placeholder="Share a specific story illustrating impact on a person or community..."
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">Challenges</div>
+                        <textarea
+                          style="min-height: 70px"
+                          placeholder="Issues, risks, or barriers faced..."
+                        ></textarea>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">Recommendations</div>
+                        <textarea
+                          style="min-height: 70px"
+                          placeholder="Follow-up actions or lessons learned..."
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">Photo Evidence</div>
+                        <input type="file" accept="image/*" multiple />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">Data Quality</div>
+                        <div class="radio-group">
+                          <label class="radio-opt"
+                            ><input type="radio" name="ev-dq" checked />
+                            Primary</label
+                          >
+                          <label class="radio-opt"
+                            ><input type="radio" name="ev-dq" />
+                            Secondary</label
+                          >
+                          <label class="radio-opt"
+                            ><input type="radio" name="ev-dq" />
+                            Estimated</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button class="btn btn-ghost" onclick="saveDraft('event')">
+                      💾 <span class="tx" data-k="save_draft">Save Draft</span>
+                    </button>
+                    <button class="btn btn-danger">
+                      🗑 <span class="tx" data-k="clear">Clear</span>
+                    </button>
+                    <button class="btn btn-kobo" onclick="openKoboModal()">
+                      🔗 API Settings
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      onclick="submitForm('event')"
+                    >
+                      ✓ <span class="tx" data-k="submit">Submit & Sync</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── PARTICIPANT FORM ── -->
+              <div id="form-participant" style="display: none">
+                <div class="fcard">
+                  <div class="fcard-head">
+                    <div class="fcard-head-icon">👤</div>
+                    <div>
+                      <div class="fcard-head-title tx" data-k="preg_title">
+                        Participant Registration
+                      </div>
+                      <div class="fcard-head-sub">
+                        Individual profile with GEDSI data and consent
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fcard-body">
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">Participant ID</div>
+                        <input value="PP-2026-0089" readonly />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          Registration Date <span class="req">*</span>
+                        </div>
+                        <input type="date" value="2026-03-03" />
+                      </div>
+                    </div>
+                    <div class="fg c3">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="first_name">First Name</span>
+                          <span class="req">*</span>
+                        </div>
+                        <input type="text" placeholder="Given name" />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="last_name">Last Name</span>
+                          <span class="req">*</span>
+                        </div>
+                        <input type="text" placeholder="Family name" />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="local_name">Local Name</span>
+                        </div>
+                        <input type="text" placeholder="ឈ្មោះជាអក្សរខ្មែរ..." />
+                      </div>
+                    </div>
+                    <div class="fg c3">
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="gender">Gender</span>
+                          <span class="req">*</span>
+                        </div>
+                        <select>
+                          <option>Female</option>
+                          <option>Male</option>
+                          <option>Non-binary</option>
+                          <option>Prefer not to say</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="age">Age</span>
+                          <span class="req">*</span>
+                        </div>
+                        <input
+                          type="number"
+                          min="10"
+                          max="120"
+                          placeholder="e.g. 34"
+                        />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">Disability Status</div>
+                        <select>
+                          <option>None</option>
+                          <option>Physical</option>
+                          <option>Visual</option>
+                          <option>Hearing</option>
+                          <option>Cognitive</option>
+                          <option>Prefer not to say</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">Ethnicity / Community</div>
+                        <input
+                          type="text"
+                          placeholder="e.g. Khmer, Kuy, Cham, Karen..."
+                        />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">Role in Community</div>
+                        <select>
+                          <option>Community Member</option>
+                          <option>Village Leader</option>
+                          <option>Women's Group Leader</option>
+                          <option>Youth Leader</option>
+                          <option>Farmer</option>
+                          <option>Fisher</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">Phone Number</div>
+                        <input type="tel" placeholder="+855 xx xxx xxxx" />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="country">Country</span>
+                          <span class="req">*</span>
+                        </div>
+                        <select
+                          onchange="updateProvince('pp-province', this.value)"
+                        >
+                          <option value="KH">🇰🇭 Cambodia</option>
+                          <option value="LA">🇱🇦 Lao PDR</option>
+                          <option value="MM">🇲🇲 Myanmar</option>
+                          <option value="TH">🇹🇭 Thailand</option>
+                          <option value="VN">🇻🇳 Vietnam</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">Village / District</div>
+                        <input
+                          type="text"
+                          placeholder="Village and district name"
+                        />
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">Linked Event IDs</div>
+                        <input
+                          type="text"
+                          placeholder="e.g. EVT-20260314-1234, EVT-20260315-5678"
+                        />
+                      </div>
+                    </div>
+                    <div class="field" style="margin-top: 4px">
+                      <div class="field-label">
+                        Data Consent <span class="req">*</span>
+                      </div>
+                      <div class="consent-box" onclick="toggleConsent(this)">
+                        <div class="toggle" id="consent-toggle">
+                          <div class="toggle-k"></div>
+                        </div>
+                        <div class="consent-text">
+                          <strong
+                            >Participant has given informed consent</strong
+                          >
+                          for their data to be collected, stored, and used for
+                          IP3 programme monitoring in accordance with Oxfam data
+                          protection standards.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button
+                      class="btn btn-ghost"
+                      onclick="saveDraft('participant')"
+                    >
+                      💾 <span class="tx" data-k="save_draft">Save Draft</span>
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      onclick="submitForm('participant')"
+                    >
+                      ✓ <span class="tx" data-k="submit">Submit & Sync</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── SURVEY FORM ── -->
+              <div id="form-survey" style="display: none">
+                <div class="fcard">
+                  <div class="fcard-head">
+                    <div class="fcard-head-icon">📊</div>
+                    <div>
+                      <div class="fcard-head-title tx" data-k="survey_title">
+                        Community Survey
+                      </div>
+                      <div class="fcard-head-sub">
+                        Water access & climate resilience assessment
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fcard-body">
+                    <div class="fg c3">
+                      <div class="field">
+                        <div class="field-label">Survey ID</div>
+                        <input value="SS-2026-0042" readonly />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">Survey Type</div>
+                        <select>
+                          <option>Baseline</option>
+                          <option>Midline</option>
+                          <option>Endline</option>
+                          <option>Rapid Assessment</option>
+                          <option>Post-Event</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="country">Country</span>
+                          <span class="req">*</span>
+                        </div>
+                        <select>
+                          <option>🇰🇭 Cambodia</option>
+                          <option>🇱🇦 Lao PDR</option>
+                          <option>🇲🇲 Myanmar</option>
+                          <option>🇹🇭 Thailand</option>
+                          <option>🇻🇳 Vietnam</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">
+                          Households Surveyed <span class="req">*</span>
+                        </div>
+                        <input type="number" min="1" placeholder="0" />
+                      </div>
+                      <div class="field">
+                        <div class="field-label">GPS Location</div>
+                        <div class="gps-row">
+                          <input
+                            id="sv-gps"
+                            type="text"
+                            placeholder="Lat, Long"
+                          /><button
+                            class="btn-gps"
+                            onclick="captureGPS('sv-gps')"
+                          >
+                            📍 Capture
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr
+                      style="
+                        border: none;
+                        border-top: 1px solid var(--border);
+                        margin: 18px 0;
+                      "
+                    />
+                    <div
+                      style="
+                        font-size: 0.82rem;
+                        font-weight: 700;
+                        color: var(--teal);
+                        margin-bottom: 14px;
+                      "
+                    >
+                      💧 Water Access Questions
+                    </div>
+
+                    <div class="field" style="margin-bottom: 14px">
+                      <div class="field-label">
+                        1. Primary drinking water source
+                        <span class="req">*</span>
+                      </div>
+                      <div class="radio-group">
+                        <label class="radio-opt"
+                          ><input type="radio" name="ws" /> Piped water</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ws" /> Protected
+                          well</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ws" /> River / pond</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ws" /> Rainwater</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ws" /> Purchased</label
+                        >
+                      </div>
+                    </div>
+                    <div class="field" style="margin-bottom: 14px">
+                      <div class="field-label">
+                        2. Satisfaction with water access (1=Poor, 5=Excellent)
+                      </div>
+                      <div class="range-wrap">
+                        <input type="range" min="1" max="5" value="3" />
+                        <div class="range-labels">
+                          <span>1 — Very Poor</span><span>2</span
+                          ><span>3 — Adequate</span><span>4</span
+                          ><span>5 — Excellent</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field" style="margin-bottom: 18px">
+                      <div class="field-label">
+                        3. Seasonal water challenges
+                      </div>
+                      <div class="tag-wrap">
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Flooding</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Drought</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Contamination</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Saltwater intrusion</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Long distance</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Affordability</span
+                        >
+                      </div>
+                    </div>
+
+                    <hr
+                      style="
+                        border: none;
+                        border-top: 1px solid var(--border);
+                        margin: 18px 0;
+                      "
+                    />
+                    <div
+                      style="
+                        font-size: 0.82rem;
+                        font-weight: 700;
+                        color: var(--amber);
+                        margin-bottom: 14px;
+                      "
+                    >
+                      🌤️ Climate Resilience Questions
+                    </div>
+
+                    <div class="field" style="margin-bottom: 14px">
+                      <div class="field-label">
+                        4. Extreme weather increased in past 2 years?
+                      </div>
+                      <div class="radio-group">
+                        <label class="radio-opt"
+                          ><input type="radio" name="ew" /> Yes,
+                          significantly</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ew" /> Somewhat more</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ew" /> About the
+                          same</label
+                        >
+                        <label class="radio-opt"
+                          ><input type="radio" name="ew" /> Less extreme</label
+                        >
+                      </div>
+                    </div>
+                    <div class="field" style="margin-bottom: 14px">
+                      <div class="field-label">
+                        5. Adaptation strategies used
+                      </div>
+                      <div class="tag-wrap">
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Early warning</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Crop diversification</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Water storage</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Flood barriers</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Mangrove restoration</span
+                        >
+                        <span class="tag" onclick="toggleTag(this)"
+                          >Migration</span
+                        >
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">
+                          6. Additional observations
+                        </div>
+                        <textarea
+                          placeholder="Record community feedback, quotes, or observations..."
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button class="btn btn-ghost" onclick="saveDraft('survey')">
+                      💾 Save Draft
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      onclick="submitForm('survey')"
+                    >
+                      ✓ Submit & Sync
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── INDICATOR FORM ── -->
+              <div id="form-indicator" style="display: none">
+                <div class="fcard">
+                  <div class="fcard-head">
+                    <div class="fcard-head-icon">📈</div>
+                    <div>
+                      <div class="fcard-head-title tx" data-k="ind_title">
+                        Indicator Monitoring
+                      </div>
+                      <div class="fcard-head-sub">
+                        Quarterly progress against IP3 programme indicators
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fcard-body">
+                    <div class="fg c2">
+                      <div class="field">
+                        <div class="field-label">
+                          Reporting Period <span class="req">*</span>
+                        </div>
+                        <select>
+                          <option>Q1 2026 (Jan–Mar)</option>
+                          <option>Q2 2026 (Apr–Jun)</option>
+                          <option>Q3 2026 (Jul–Sep)</option>
+                          <option>Q4 2026 (Oct–Dec)</option>
+                          <option>Annual 2026</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <div class="field-label">
+                          <span class="tx" data-k="country">Country</span>
+                          <span class="req">*</span>
+                        </div>
+                        <select>
+                          <option>🇰🇭 Cambodia</option>
+                          <option>🇱🇦 Lao PDR</option>
+                          <option>🇲🇲 Myanmar</option>
+                          <option>🇹🇭 Thailand</option>
+                          <option>🇻🇳 Vietnam</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="ind-rows">
+                      ${[ ['IND-01','People with improved water
+                      access','5,000'], ['IND-02','Water governance policies
+                      influenced','12'], ['IND-03','Climate adaptation
+                      activities completed','80'], ['IND-04','Women in
+                      leadership / decision-making roles','300'],
+                      ['IND-05','Communities with action plans','45'],
+                      ['IND-06','Partners with enhanced MEAL capacity','25'],
+                      ['IND-07','Youth meaningfully engaged','1,200'],
+                      ].map(([id,name,target])=>`
+                      <div class="ind-row">
+                        <div class="ind-row-head">
+                          <div>
+                            <span class="ind-id">${id}</span
+                            ><span class="ind-name" style="margin-left: 8px"
+                              >${name}</span
+                            >
+                          </div>
+                          <span class="ind-target">Target: ${target}</span>
+                        </div>
+                        <div class="ind-inputs">
+                          <div class="field">
+                            <div class="field-label">Reported Value</div>
+                            <input type="number" min="0" placeholder="0" />
+                          </div>
+                          <div class="field">
+                            <div class="field-label">Data Quality</div>
+                            <select>
+                              <option>Primary</option>
+                              <option>Secondary</option>
+                              <option>Estimated</option>
+                            </select>
+                          </div>
+                          <div class="field">
+                            <div class="field-label">Source / Notes</div>
+                            <input
+                              type="text"
+                              placeholder="e.g. partner report, field visit..."
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      `).join('')}
+                    </div>
+                    <div class="fg c1" style="margin-top: 14px">
+                      <div class="field">
+                        <div class="field-label">Key Highlights</div>
+                        <textarea
+                          placeholder="What progress was made this period?"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="fg c1">
+                      <div class="field">
+                        <div class="field-label">Barriers to Progress</div>
+                        <textarea
+                          placeholder="Any obstacles or risks affecting indicator achievement..."
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button
+                      class="btn btn-ghost"
+                      onclick="saveDraft('indicator')"
+                    >
+                      💾 Save Draft
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      onclick="submitForm('indicator')"
+                    >
+                      ✓ Submit & Sync
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form sidebar -->
+            <div class="form-sidebar-panel">
+              <!-- KoboToolbox config -->
+              <div class="panel-card">
+                <div class="panel-title">🔗 KoboToolbox API</div>
+                <div class="kobo-cfg">
+                  <div class="kobo-field">
+                    <label>Server URL</label>
+                    <input
+                      id="cfg-url"
+                      type="text"
+                      value="https://kf.kobotoolbox.org"
+                      placeholder="https://kf.kobotoolbox.org"
+                    />
+                  </div>
+                  <div class="kobo-field">
+                    <label>API Token</label>
+                    <input
+                      id="cfg-token"
+                      type="password"
+                      placeholder="Paste your API token"
+                    />
+                  </div>
+                  <div class="kobo-field">
+                    <label>Asset UID</label>
+                    <input
+                      id="cfg-uid"
+                      type="text"
+                      placeholder="e.g. aXmNqP8kJd..."
+                    />
+                  </div>
+                  <div class="conn-status idle" id="conn-status">
+                    <div class="cs-dot"></div>
+                    <span id="conn-msg">Not configured</span>
+                  </div>
+                  <button
+                    class="btn btn-kobo"
+                    style="
+                      width: 100%;
+                      justify-content: center;
+                      margin-top: 8px;
+                    "
+                    onclick="testConnection()"
+                  >
+                    Test Connection
+                  </button>
+                </div>
+              </div>
+
+              <!-- Recent submissions -->
+              <div class="panel-card">
+                <div class="panel-title">📤 Recent Submissions</div>
+                <div class="sub-log" id="sub-log">
+                  <div class="empty">
+                    <div class="empty-icon">📭</div>
+                    <div class="empty-text">No submissions yet</div>
+                    <div class="empty-sub">Submit a form to see it here</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Help -->
+              <div
+                class="panel-card"
+                style="
+                  background: var(--teal4);
+                  border-color: rgba(13, 148, 136, 0.2);
+                "
+              >
+                <div class="panel-title" style="color: var(--teal)">
+                  💡 How API Works
+                </div>
+                <p
+                  style="
+                    font-size: 0.74rem;
+                    color: var(--text2);
+                    line-height: 1.6;
+                  "
+                >
+                  1. Get your API Token from KoboToolbox → Account Settings<br /><br />
+                  2. Find your Asset UID in the form URL after deploying<br /><br />
+                  3. Click <strong>Test Connection</strong> to verify<br /><br />
+                  4. Submit forms — data goes directly to KoboToolbox →
+                  SharePoint → Power BI
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════ LOG PAGE ══════ -->
+        <div class="page-content" id="page-log">
+          <div class="log-kpis">
+            <div class="lkpi">
+              <div class="lkpi-ico">📋</div>
+              <div>
+                <div class="lkpi-n" style="color: var(--teal)">52</div>
+                <div class="lkpi-l">Total</div>
+              </div>
+            </div>
+            <div class="lkpi">
+              <div class="lkpi-ico">✚</div>
+              <div>
+                <div class="lkpi-n" style="color: var(--teal)">24</div>
+                <div class="lkpi-l">Created</div>
+              </div>
+            </div>
+            <div class="lkpi">
+              <div class="lkpi-ico">✏️</div>
+              <div>
+                <div class="lkpi-n" style="color: var(--amber)">19</div>
+                <div class="lkpi-l">Edited</div>
+              </div>
+            </div>
+            <div class="lkpi">
+              <div class="lkpi-ico">🗑</div>
+              <div>
+                <div class="lkpi-n" style="color: var(--red)">9</div>
+                <div class="lkpi-l">Deleted</div>
+              </div>
+            </div>
+            <div class="lkpi">
+              <div class="lkpi-ico">📤</div>
+              <div>
+                <div class="lkpi-n" style="color: var(--blue)">18</div>
+                <div class="lkpi-l">Synced</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="log-toolbar">
+            <div class="log-search">
+              <span class="log-search-icon">🔍</span>
+              <input
+                type="text"
+                placeholder="Search users, actions, countries..."
+                oninput="searchLog(this.value)"
+              />
+            </div>
+            <div class="log-filters">
+              <button class="fchip on" onclick="filterLog('all', this)">
+                All
+              </button>
+              <button class="fchip" onclick="filterLog('cr', this)">
+                ✚ Create
+              </button>
+              <button class="fchip" onclick="filterLog('ed', this)">
+                ✏ Edit
+              </button>
+              <button class="fchip" onclick="filterLog('dl', this)">
+                🗑 Delete
+              </button>
+              <button class="fchip" onclick="filterLog('sb', this)">
+                📤 Synced
+              </button>
+              <button class="fchip" onclick="filterLog('vw', this)">
+                👁 View
+              </button>
+            </div>
+          </div>
+
+          <div class="log-table">
+            <div class="lt-head">
+              <div>User</div>
+              <div>Action</div>
+              <div>Description</div>
+              <div>Country</div>
+              <div>Form Type</div>
+              <div>Time</div>
+            </div>
+            <div id="log-rows"></div>
+          </div>
+        </div>
+      </div>
+      <!-- /main -->
+    </div>
+    <!-- /shell -->
+
+    <!-- ── KOBO MODAL ── -->
+    <div class="modal-overlay" id="kobo-modal">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="modal-icon">🔗</div>
+          <div>
+            <div class="modal-title">KoboToolbox API Connection</div>
+            <div class="modal-sub">
+              Connect to sync all form submissions directly to KoboToolbox
+            </div>
+          </div>
+        </div>
+        <div class="modal-fields">
+          <div class="modal-field">
+            <label>KoboToolbox Server URL</label>
+            <input id="m-url" type="text" value="https://kf.kobotoolbox.org" />
+          </div>
+          <div class="modal-field">
+            <label>API Token <span style="color: var(--red)">*</span></label>
+            <input
+              id="m-token"
+              type="password"
+              placeholder="Paste from Account Settings → Security → API Key"
+              value="bea1fd7980f610ece34d197c37e1fbc8943a2e1e"
+            />
+          </div>
+          <div class="modal-field">
+            <label
+              >Form Asset UID <span style="color: var(--red)">*</span></label
+            >
+            <input
+              id="m-uid"
+              type="text"
+              placeholder="Found in form URL: /assets/YOUR_ASSET_UID/"
+              value="aXMH8cg9uj2XGsx7GHa9zT"
+            />
+          </div>
+        </div>
+        <div class="modal-status" id="modal-status"></div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeKoboModal()">
+            Cancel
+          </button>
+          <button class="btn btn-secondary" onclick="testConnectionModal()">
+            Test Connection
+          </button>
+          <button class="btn btn-primary" onclick="saveKoboConfig()">
+            Save & Connect
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toasts -->
+    <div class="toast-wrap" id="toast-wrap"></div>
+
+    <script>
+      // ─── STATE ──────────────────────────────────────────────────────────────────
+      const STATE = {
+        lang: "en",
+        kobo: {
+          url: "https://kf.kobotoolbox.org",
+          token: "bea1fd7980f610ece34d197c37e1fbc8943a2e1e", // Pre-filled
+          uid: "aXMH8cg9uj2XGsx7GHa9zT", // Pre-filled
+          connected: false,
+        },
+        submissions: [],
+        logFilter: "all",
+        logSearch: "",
+        koboData: { submissions: [], count: 0 },
+        autoRefreshInterval: null,
+      };
+
+      // ─── TRANSLATIONS ─────────────────────────────────────────────────────────
+      const T = {
+        en: {
+          nav_dash: "Dashboard",
+          nav_form: "Data Entry",
+          nav_log: "Activity Log",
+          welcome_h: "Welcome to IP3 MEAL System",
+          welcome_p:
+            "Centralized monitoring, evaluation, accountability and learning across five Mekong nations.",
+          new_entry: "New Data Entry",
+          p1t: "Inclusive Water Governance",
+          p1d: "Track water access, governance policies, and community engagement across the Mekong basin.",
+          p2t: "Climate Resilience",
+          p2d: "Document climate adaptation activities and environmental indicators linked to Power BI.",
+          p3t: "Social Equity",
+          p3d: "Capture GEDSI markers, disaggregated reach data, and stories of change.",
+          kpi1: "People Reached",
+          kpi2: "Events Recorded",
+          kpi3: "Indicator Progress",
+          kpi4: "Female Participation",
+          chart1_t: "Indicator Progress vs Target",
+          chart1_s: "Q1 2026 · All 5 countries combined",
+          chart2_t: "Participants by Gender",
+          chart2_s: "Current reporting period",
+          ft1: "Event & Activity",
+          ft1d: "Workshops, field visits, meetings",
+          ft2: "Participant Registration",
+          ft2d: "Individual profiles & consent",
+          ft3: "Community Survey",
+          ft3d: "Water access & climate questions",
+          ft4: "Indicator Monitoring",
+          ft4d: "Quarterly IP3 indicator values",
+          offline:
+            "Offline-ready — data saved locally and synced when connected.",
+          step1: "Event Info",
+          step2: "Participants",
+          step3: "Narrative",
+          step4: "Submit",
+          sec_a: "A — Event Information",
+          sec_a_sub: "Basic event details and location",
+          sec_b: "B — Participants & GEDSI",
+          sec_c: "C — Narrative & Evidence",
+          event_title: "Event Title",
+          country: "Country",
+          province: "Province",
+          pillar: "Programme Pillar",
+          event_type: "Event Type",
+          partner: "Implementing Partner",
+          capture: "Capture",
+          total: "Total",
+          female: "Female",
+          male: "Male",
+          youth: "Youth 15–35",
+          indigenous: "Indigenous",
+          pwd: "Persons w/ Disability",
+          gedsi_markers: "GEDSI Markers",
+          summary: "Activity Summary",
+          story: "Story of Change",
+          preg_title: "Participant Registration",
+          first_name: "First Name",
+          last_name: "Last Name",
+          local_name: "Local Name",
+          gender: "Gender",
+          age: "Age",
+          survey_title: "Community Survey",
+          ind_title: "Indicator Monitoring",
+          save_draft: "Save Draft",
+          clear: "Clear",
+          submit: "Submit & Sync",
+        },
+        km: {
+          nav_dash: "ផ្ទាំងគ្រប់គ្រង",
+          nav_form: "បញ្ចូលទិន្នន័យ",
+          nav_log: "កំណត់ហេតុ",
+          welcome_h: "ស្វាគមន៍មកកាន់ IP3 MEAL",
+          p1t: "អភិបាលកិច្ចទឹករួម",
+          p1d: "តាមដានការប្រើប្រាស់ទឹក គោលនយោបាយ និងការចូលរួម",
+          p2t: "ភាពធន់ต่อ អាកាសធាតុ",
+          p2d: "ចងក្រងសកម្មភាពសម្របខ្លួន",
+          p3t: "សមធម៌សង្គម",
+          p3d: "ប្រមូល GEDSI រឿងរ៉ាវនៃការផ្លាស់ប្ដូរ",
+          event_title: "ចំណងជើងព្រឹត្តិការណ៍",
+          country: "ប្រទេស",
+          province: "ខេត្ត",
+          total: "សរុប",
+          female: "ស្ត្រី",
+          male: "បុរស",
+          save_draft: "រក្សាទុក",
+          submit: "ដាក់ស្នើ",
+        },
+        lo: {
+          nav_dash: "ແຜງໜ້າປັດ",
+          nav_form: "ປ້ອນຂໍ້ມູນ",
+          nav_log: "ບັນທຶກ",
+          welcome_h: "ຍິນດີຕ້ອນຮັບ IP3 MEAL",
+          p1t: "ການຄຸ້ມຄອງນ້ຳ",
+          p1d: "ຕິດຕາມການເຂົ້າເຖິງນ້ຳ",
+          p2t: "ຄວາມທົນທານດ້ານສະພາບອາກາດ",
+          p2d: "ບັນທຶກກິດຈະກຳການປັບຕົວ",
+          p3t: "ຄວາມສະເໝີພາບ",
+          p3d: "ເກັບກຳ GEDSI ແລະ ເລື່ອງລາວ",
+          country: "ປະເທດ",
+          total: "ທັງໝົດ",
+          female: "ຍິງ",
+          male: "ຊາຍ",
+          save_draft: "ບັນທຶກ",
+          submit: "ສົ່ງ",
+        },
+        my: {
+          nav_dash: "ဒက်ရှ်ဘုတ်",
+          nav_form: "ဒေတာထည့်သွင်း",
+          nav_log: "မှတ်တမ်း",
+          welcome_h: "IP3 MEAL သို့ ကြိုဆိုပါသည်",
+          p1t: "ရေအုပ်ချုပ်ရေး",
+          p1d: "ရေရရှိနိုင်မှုနှင့် မူဝါဒတို့ကို ခြေရာခံပါ",
+          p2t: "ရာသီဥတုဒဏ်ခံ",
+          p2d: "ကိုက်ညီမှုလှုပ်ရှားမှုများ မှတ်တမ်းတင်ပါ",
+          p3t: "လူမှုတန်းတူ",
+          p3d: "GEDSI မာကာများ ကောက်ယူပါ",
+          country: "နိုင်ငံ",
+          total: "စုစုပေါင်း",
+          female: "အမျိုးသမီး",
+          male: "အမျိုးသား",
+          save_draft: "မူကြမ်းသိမ်း",
+          submit: "တင်သွင်း",
+        },
+        th: {
+          nav_dash: "แดชบอร์ด",
+          nav_form: "บันทึกข้อมูล",
+          nav_log: "บันทึกกิจกรรม",
+          welcome_h: "ยินดีต้อนรับสู่ IP3 MEAL",
+          p1t: "การกำกับดูแลน้ำ",
+          p1d: "ติดตามการเข้าถึงน้ำและนโยบาย",
+          p2t: "ความยืดหยุ่นต่อสภาพภูมิอากาศ",
+          p2d: "บันทึกกิจกรรมการปรับตัว",
+          p3t: "ความเท่าเทียม",
+          p3d: "เก็บข้อมูล GEDSI และเรื่องราวการเปลี่ยนแปลง",
+          country: "ประเทศ",
+          total: "ทั้งหมด",
+          female: "หญิง",
+          male: "ชาย",
+          save_draft: "บันทึกร่าง",
+          submit: "ส่ง",
+        },
+        vi: {
+          nav_dash: "Bảng điều khiển",
+          nav_form: "Nhập dữ liệu",
+          nav_log: "Nhật ký",
+          welcome_h: "Chào mừng đến IP3 MEAL",
+          p1t: "Quản trị nước bao trùm",
+          p1d: "Theo dõi tiếp cận nước và chính sách",
+          p2t: "Khả năng chống chịu khí hậu",
+          p2d: "Ghi lại các hoạt động thích ứng",
+          p3t: "Bình đẳng xã hội",
+          p3d: "Thu thập dữ liệu GEDSI và câu chuyện thay đổi",
+          country: "Quốc gia",
+          total: "Tổng số",
+          female: "Nữ",
+          male: "Nam",
+          save_draft: "Lưu nháp",
+          submit: "Gửi",
+        },
+      };
+
+      function setLang(lang, btn) {
+        STATE.lang = lang;
+        document
+          .querySelectorAll(".lb")
+          .forEach((b) => b.classList.remove("on"));
+        btn.classList.add("on");
+        const t = { ...T.en, ...(T[lang] || {}) };
+        document.querySelectorAll(".tx[data-k]").forEach((el) => {
+          if (t[el.dataset.k]) el.textContent = t[el.dataset.k];
+        });
+        const fontMap = {
+          km: "Noto Sans Khmer",
+          lo: "Noto Sans Lao",
+          my: "Noto Sans Myanmar",
+          th: "Noto Sans Thai",
+        };
+        document.body.style.fontFamily = fontMap[lang]
+          ? `'${fontMap[lang]}','Plus Jakarta Sans',sans-serif`
+          : "'Plus Jakarta Sans',sans-serif";
+      }
+
+      // ─── NAVIGATION ──────────────────────────────────────────────────────────
+      function nav(page, btn) {
+        document
+          .querySelectorAll(".page-content")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.remove("active"));
+        document.getElementById("page-" + page).classList.add("active");
+        if (btn) btn.classList.add("active");
+        const titles = {
+          dashboard: "Dashboard",
+          form: "Data Entry",
+          log: "Activity Log",
+        };
+        document.getElementById("topbar-title").textContent =
+          titles[page] || page;
+      }
+
+      function goForm(type) {
+        nav("form", document.querySelectorAll(".nav-item")[1]);
+        switchForm(type, document.getElementById("ft-" + type));
+      }
+
+      // ─── FORM SWITCHER ────────────────────────────────────────────────────────
+      function switchForm(type, btn) {
+        ["event", "participant", "survey", "indicator"].forEach((t) => {
+          document.getElementById("form-" + t).style.display = "none";
+          document.getElementById("ft-" + t).classList.remove("on");
+        });
+        document.getElementById("form-" + type).style.display = "block";
+        if (btn) btn.classList.add("on");
+      }
+
+      // ─── PROVINCES ────────────────────────────────────────────────────────────
+      const PROVINCES = {
+        KH: [
+          "Phnom Penh",
+          "Siem Reap",
+          "Kampong Cham",
+          "Kampong Chhnang",
+          "Kandal",
+          "Kratie",
+          "Stung Treng",
+          "Ratanakiri",
+          "Kampot",
+        ],
+        LA: [
+          "Vientiane Capital",
+          "Savannakhet",
+          "Champasak",
+          "Luang Prabang",
+          "Khammouane",
+          "Bokeo",
+          "Attapeu",
+        ],
+        MM: [
+          "Ayeyarwady",
+          "Yangon",
+          "Mandalay",
+          "Sagaing",
+          "Bago",
+          "Kayin",
+          "Shan",
+        ],
+        TH: [
+          "Chiang Rai",
+          "Chiang Mai",
+          "Nakhon Phanom",
+          "Ubon Ratchathani",
+          "Mukdahan",
+          "Bueng Kan",
+          "Loei",
+        ],
+        VN: [
+          "An Giang",
+          "Dong Thap",
+          "Long An",
+          "Tien Giang",
+          "Ben Tre",
+          "Tra Vinh",
+          "Ca Mau",
+          "Kien Giang",
+        ],
+      };
+      function updateProvince(selId, countryCode) {
+        const sel = document.getElementById(selId);
+        if (!sel) return;
+        sel.innerHTML = (PROVINCES[countryCode] || [])
+          .map((p) => `<option>${p}</option>`)
+          .join("");
+      }
+      updateProvince("ev-province", "KH");
+
+      // ─── GPS ─────────────────────────────────────────────────────────────────
+      function captureGPS(inputId) {
+        const el = document.getElementById(inputId);
+        if (!el) return;
+        if (navigator.geolocation) {
+          el.placeholder = "Detecting...";
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              el.value = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
+              showToast("📍 GPS captured", "success");
+            },
+            () => {
+              el.value = "11.55640, 104.92820";
+              showToast("📍 Demo GPS — Phnom Penh", "info");
+            },
+          );
+        }
+      }
+
+      // ─── TAGS & TOGGLES ─────────────────────────────────────────────────────
+      function toggleTag(el) {
+        el.classList.toggle("on");
+      }
+      function toggleConsent(box) {
+        const t = document.getElementById("consent-toggle");
+        t.classList.toggle("on");
+      }
+
+      // ─── KOBO API ────────────────────────────────────────────────────────────
+      function openKoboModal() {
+        document.getElementById("m-url").value =
+          document.getElementById("cfg-url").value;
+        document.getElementById("m-token").value =
+          document.getElementById("cfg-token").value;
+        document.getElementById("m-uid").value =
+          document.getElementById("cfg-uid").value;
+        document.getElementById("kobo-modal").classList.add("open");
+        setModalStatus("idle", "");
+      }
+      function closeKoboModal() {
+        document.getElementById("kobo-modal").classList.remove("open");
+      }
+
+      function setModalStatus(type, msg) {
+        const el = document.getElementById("modal-status");
+        el.className = `modal-status ${type}`;
+        if (type === "loading")
+          el.innerHTML = `<span class="spin">⏳</span> ${msg}`;
+        else if (type === "ok") el.innerHTML = `✅ ${msg}`;
+        else if (type === "err") el.innerHTML = `❌ ${msg}`;
+        else {
+          el.style.display = "none";
+          return;
+        }
+        el.style.display = "flex";
+      }
+
+      async function testConnectionModal() {
+        const url = document.getElementById("m-url").value.trim();
+        const token = document.getElementById("m-token").value.trim();
+        if (!token) {
+          setModalStatus("err", "API Token is required");
+          return;
+        }
+        setModalStatus("loading", "Testing connection...");
+        try {
+          const r = await fetch(`${url}/api/v2/assets/?format=json`, {
+            headers: { Authorization: `Token ${token}` },
+          });
+          if (r.ok)
+            setModalStatus(
+              "ok",
+              `Connected! ${(await r.json()).count || ""} forms found.`,
+            );
+          else setModalStatus("err", `Error ${r.status}: Check your token`);
+        } catch (e) {
+          setModalStatus(
+            "err",
+            "Connection failed — check URL and token (CORS may block browser testing)",
+          );
+        }
+      }
+
+      async function testConnection() {
+        const url = document.getElementById("cfg-url").value.trim();
+        const token = document.getElementById("cfg-token").value.trim();
+        const st = document.getElementById("conn-status");
+        const msg = document.getElementById("conn-msg");
+        if (!token) {
+          st.className = "conn-status err";
+          msg.textContent = "Enter API token first";
+          return;
+        }
+        st.className = "conn-status idle";
+        msg.innerHTML = '<span class="spin">⏳</span> Testing...';
+        try {
+          const r = await fetch(`${url}/api/v2/assets/?format=json`, {
+            headers: { Authorization: `Token ${token}` },
+          });
+          if (r.ok) {
+            st.className = "conn-status ok";
+            msg.textContent = "Connected to KoboToolbox ✓";
+            updateKoboTopbar(true);
+          } else {
+            st.className = "conn-status err";
+            msg.textContent = `Error ${r.status}`;
+            updateKoboTopbar(false);
+          }
+        } catch (e) {
+          st.className = "conn-status err";
+          msg.textContent = "Failed (check console)";
+          updateKoboTopbar(false);
+        }
+      }
+
+      function saveKoboConfig() {
+        STATE.kobo.url = document.getElementById("m-url").value.trim();
+        STATE.kobo.token = document.getElementById("m-token").value.trim();
+        STATE.kobo.uid = document.getElementById("m-uid").value.trim();
+        closeKoboModal();
+        if (STATE.kobo.token && STATE.kobo.uid) {
+          STATE.kobo.connected = true;
+          updateKoboTopbar(true);
+          showToast("✓ KoboToolbox API configured", "success");
+          loadKoboSubmissions(); // Automatically load data
+          startAutoRefresh(); // Start auto-refresh every 5 minutes
+        } else {
+          showToast("✗ API Token and Asset UID are required", "error");
+        }
+      }
+
+      // ─── LOAD SUBMISSIONS FROM KOBOTOOLBOX ────────────────────────────────
+      async function loadKoboSubmissions() {
+        if (!STATE.kobo.token || !STATE.kobo.uid) {
+          showToast("✗ Configure API credentials first", "warning");
+          return;
+        }
+
+        try {
+          showToast("⏳ Syncing with KoboToolbox...", "info");
+          const url = `${STATE.kobo.url}/api/v2/assets/${STATE.kobo.uid}/data/?format=json&limit=500`;
+          const response = await fetch(url, {
+            headers: { Authorization: `Token ${STATE.kobo.token}` },
+          });
+
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const data = await response.json();
+          STATE.koboData = {
+            submissions: data.results || [],
+            count: data.count || 0,
+          };
+
+          // Update KPIs with real data
+          updateKPIsFromKobo();
+
+          // Add submissions to activity log
+          addKoboSubmissionsToLog();
+
+          updateKoboTopbar(true);
+          showToast(
+            `✓ Synced ${STATE.koboData.count} submission(s) from KoboToolbox`,
+            "success",
+          );
+        } catch (e) {
+          console.error("Error loading KoboToolbox submissions:", e);
+          showToast(`✗ Failed to sync: ${e.message}`, "error");
+          updateKoboTopbar(false);
+        }
+      }
+
+      function updateKPIsFromKobo() {
+        const subs = STATE.koboData.submissions;
+        if (subs.length === 0) return;
+
+        // Calculate KPIs
+        let totalParticipants = 0;
+        let femaleCount = 0;
+        let eventCount = 0;
+
+        subs.forEach((sub) => {
+          if (sub.total_participants)
+            totalParticipants += parseInt(sub.total_participants) || 0;
+          if (sub.female_participants)
+            femaleCount += parseInt(sub.female_participants) || 0;
+          if (sub.form_type === "event") eventCount++;
+        });
+
+        // Update KPI cards
+        const kpi1 = document
+          .querySelector('[data-k="kpi1"]')
+          ?.parentElement?.querySelector(".kpi-big");
+        const kpi2 = document
+          .querySelector('[data-k="kpi2"]')
+          ?.parentElement?.querySelector(".kpi-big");
+        const kpi4 = document
+          .querySelector('[data-k="kpi4"]')
+          ?.parentElement?.querySelector(".kpi-big");
+
+        if (kpi1) kpi1.textContent = totalParticipants.toLocaleString();
+        if (kpi2) kpi2.textContent = eventCount;
+        if (kpi4)
+          kpi4.textContent =
+            totalParticipants > 0
+              ? `${Math.round((femaleCount / totalParticipants) * 100)}%`
+              : "—";
+      }
+
+      function addKoboSubmissionsToLog() {
+        const subs = STATE.koboData.submissions.slice(0, 10); // Last 10
+        subs.forEach((sub) => {
+          if (!logData.some((l) => l.desc.includes(sub._id))) {
+            const ftMap = {
+              event: "Event",
+              participant: "Participant",
+              survey: "Survey",
+              indicator: "Indicator",
+            };
+            logData.unshift({
+              user: sub._submitted_by || "Field Staff",
+              role: "Data Collector",
+              av: "c1",
+              action: "sb",
+              desc: `Synced <span class="ht">${sub._id || "Submission"}</span> — ${ftMap[sub.form_type] || sub.form_type || "Form"}`,
+              form: ftMap[sub.form_type] || "Form",
+              country: sub.country || "—",
+              time: sub._submission_time
+                ? new Date(sub._submission_time).toLocaleTimeString()
+                : "Unknown",
+            });
+          }
+        });
+        filteredLog = [...logData];
+        renderLog(filteredLog);
+      }
+
+      function startAutoRefresh() {
+        // Clear existing interval if any
+        if (STATE.autoRefreshInterval) clearInterval(STATE.autoRefreshInterval);
+
+        // Refresh every 5 minutes (300000ms)
+        STATE.autoRefreshInterval = setInterval(
+          () => {
+            if (STATE.kobo.connected) {
+              loadKoboSubmissions();
+            }
+          },
+          5 * 60 * 1000,
+        );
+
+        showToast("✓ Auto-refresh enabled (5 min)", "success");
+      }
+
+      function updateKoboTopbar(ok) {
+        const el = document.getElementById("kobo-topbar");
+        const txt = document.getElementById("kobo-status-text");
+        STATE.kobo.connected = ok;
+        if (ok) {
+          el.className = "kobo-status";
+          txt.textContent = "KoboToolbox — Connected";
+        } else {
+          el.className = "kobo-status disconnected";
+          txt.textContent = "KoboToolbox — Not Connected";
+        }
+      }
+
+      // ─── FORM SUBMISSION → KOBOTOOLBOX API ───────────────────────────────────
+      async function submitForm(type) {
+        const labels = {
+          event: "Event Form",
+          participant: "Participant Profile",
+          survey: "Community Survey",
+          indicator: "Indicator Report",
+        };
+        const ids = {
+          event: `EVT-${Date.now().toString().slice(-6)}`,
+          participant: `PP-${Date.now().toString().slice(-6)}`,
+          survey: `SS-${Date.now().toString().slice(-6)}`,
+          indicator: `IND-Q1-${Date.now().toString().slice(-4)}`,
+        };
+
+        // Build payload from form
+        const payload = buildPayload(type, ids[type]);
+
+        // Try KoboToolbox API if configured
+        if (STATE.kobo.token && STATE.kobo.uid) {
+          try {
+            showToast("⏳ Syncing to KoboToolbox...", "info");
+            const r = await fetch(
+              `${STATE.kobo.url}/api/v2/assets/${STATE.kobo.uid}/submissions/`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Token ${STATE.kobo.token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+              },
+            );
+            if (r.ok || r.status === 201) {
+              showToast(`✓ ${labels[type]} synced to KoboToolbox!`, "success");
+              addToSubLog(type, ids[type], true);
+              addToLog("sb", type, ids[type], true);
+            } else {
+              const err = await r.json().catch(() => ({}));
+              showToast(`Saved locally — Kobo error ${r.status}`, "warning");
+              addToSubLog(type, ids[type], false, `HTTP ${r.status}`);
+              addToLog("cr", type, ids[type], false);
+            }
+          } catch (e) {
+            showToast("Saved locally — network error", "warning");
+            addToSubLog(type, ids[type], false, "Network error");
+            addToLog("cr", type, ids[type], false);
+          }
+        } else {
+          showToast(
+            `✓ ${labels[type]} saved locally (API not configured)`,
+            "info",
+          );
+          addToSubLog(type, ids[type], false, "No API configured");
+          addToLog("cr", type, ids[type], false);
+        }
+        STATE.submissions.push({ type, id: ids[type], time: new Date() });
+      }
+
+      function buildPayload(type, id) {
+        const base = {
+          _id: id,
+          form_type: type,
+          submission_date: new Date().toISOString(),
+          submitted_by: "Sophea Rith",
+          country: document.getElementById("ev-country")?.value || "KH",
+        };
+        if (type === "event") {
+          return {
+            ...base,
+            event_id: document.getElementById("ev-date")?.value || "",
+            event_title: document.getElementById("ev-title")?.value || "",
+            event_type: document.getElementById("ev-type")?.value || "",
+            pillar: document.getElementById("ev-pillar")?.value || "",
+            total_participants: document.getElementById("ev-total")?.value || 0,
+            female_participants:
+              document.getElementById("ev-female")?.value || 0,
+            male_participants: document.getElementById("ev-male")?.value || 0,
+            gps: document.getElementById("ev-gps")?.value || "",
+            activity_summary:
+              document.getElementById("ev-summary")?.value || "",
+          };
+        }
+        return base;
+      }
+
+      function saveDraft(type) {
+        showToast("💾 Draft saved locally", "info");
+      }
+
+      function addToSubLog(type, id, synced, error) {
+        const log = document.getElementById("sub-log");
+        const icons = {
+          event: "📅",
+          participant: "👤",
+          survey: "📊",
+          indicator: "📈",
+        };
+        const item = document.createElement("div");
+        item.className = "sub-item";
+        item.innerHTML = `
+    <span class="sub-item-icon">${synced ? "✅" : "💾"}</span>
+    <div class="sub-item-text">
+      <strong>${icons[type]} ${id}</strong>
+      ${synced ? "Synced to KoboToolbox" : error || "Saved locally"}
+      <div class="sub-item-time">Just now</div>
+    </div>`;
+        // Remove empty state
+        const empty = log.querySelector(".empty");
+        if (empty) empty.remove();
+        log.prepend(item);
+      }
+
+      // ─── ACTIVITY LOG DATA ────────────────────────────────────────────────────
+      const LOG_BASE = [
+        {
+          user: "Sophea Rith",
+          role: "MEAL Officer · KH",
+          av: "c1",
+          action: "cr",
+          desc: 'Created event form <span class="ht">EVT-2026-0312</span> — Community Water Governance Training',
+          form: "Event",
+          country: "Cambodia",
+          time: "09:14 AM",
+        },
+        {
+          user: "Malee Panya",
+          role: "MEAL Officer · TH",
+          av: "c2",
+          action: "ed",
+          desc: 'Updated participant count in <span class="ht">EVT-2026-0308</span> from 45 → 52',
+          form: "Event",
+          country: "Thailand",
+          time: "08:52 AM",
+        },
+        {
+          user: "Khamla Vong",
+          role: "Data Entry · LA",
+          av: "c3",
+          action: "dl",
+          desc: 'Deleted duplicate form <span class="ht">EVT-2026-0301b</span> — Climate Workshop',
+          form: "Event",
+          country: "Lao PDR",
+          time: "08:30 AM",
+        },
+        {
+          user: "Nguyen Minh",
+          role: "Coordinator · VN",
+          av: "c4",
+          action: "sb",
+          desc: 'Synced <span class="ht">IND-Q4-VN-2025</span> to KoboToolbox — 7 indicators reported',
+          form: "Indicator",
+          country: "Vietnam",
+          time: "Yesterday",
+        },
+        {
+          user: "Sophea Rith",
+          role: "MEAL Officer · KH",
+          av: "c1",
+          action: "vw",
+          desc: 'Viewed <span class="ht">Cambodia Q1 2026 Power BI Dashboard</span>',
+          form: "—",
+          country: "Cambodia",
+          time: "Yesterday",
+        },
+        {
+          user: "Aung Kyaw",
+          role: "Field Staff · MM",
+          av: "c5",
+          action: "cr",
+          desc: 'Registered participant <span class="ht">PP-2026-0088</span> — Ayeyarwady Community Survey',
+          form: "Participant",
+          country: "Myanmar",
+          time: "Mar 2",
+        },
+        {
+          user: "Malee Panya",
+          role: "MEAL Officer · TH",
+          av: "c2",
+          action: "sb",
+          desc: 'Synced community survey <span class="ht">SS-2026-0041</span> — Chiang Rai Household Water Assessment',
+          form: "Survey",
+          country: "Thailand",
+          time: "Mar 2",
+        },
+        {
+          user: "Khamla Vong",
+          role: "Data Entry · LA",
+          av: "c3",
+          action: "ed",
+          desc: 'Edited GPS coordinates in <span class="ht">EVT-2026-0290</span> — corrected Vientiane location',
+          form: "Event",
+          country: "Lao PDR",
+          time: "Mar 2",
+        },
+        {
+          user: "Nguyen Minh",
+          role: "Coordinator · VN",
+          av: "c4",
+          action: "dl",
+          desc: 'Deleted test entry <span class="ht">EVT-TEST-001</span> — cleared staging before Q1 reporting',
+          form: "Event",
+          country: "Vietnam",
+          time: "Mar 1",
+        },
+        {
+          user: "Sophea Rith",
+          role: "MEAL Officer · KH",
+          av: "c1",
+          action: "cr",
+          desc: 'Uploaded 12 photo evidence files for <span class="ht">EVT-2026-0285</span>',
+          form: "Event",
+          country: "Cambodia",
+          time: "Mar 1",
+        },
+        {
+          user: "Aung Kyaw",
+          role: "Field Staff · MM",
+          av: "c5",
+          action: "ed",
+          desc: 'Revised GEDSI markers in <span class="ht">PP-2026-0075</span> — added Indigenous Rights',
+          form: "Participant",
+          country: "Myanmar",
+          time: "Feb 29",
+        },
+        {
+          user: "Malee Panya",
+          role: "MEAL Officer · TH",
+          av: "c2",
+          action: "cr",
+          desc: 'Created survey <span class="ht">SS-2026-0038</span> — Flood Impact Rapid Assessment',
+          form: "Survey",
+          country: "Thailand",
+          time: "Feb 28",
+        },
+        {
+          user: "Khamla Vong",
+          role: "Data Entry · LA",
+          av: "c3",
+          action: "vw",
+          desc: 'Accessed <span class="ht">Lao PDR Monthly Dashboard Feb 2026</span>',
+          form: "—",
+          country: "Lao PDR",
+          time: "Feb 28",
+        },
+        {
+          user: "Nguyen Minh",
+          role: "Coordinator · VN",
+          av: "c4",
+          action: "cr",
+          desc: 'Created consultation form <span class="ht">EVT-2026-0280</span> — Mekong Delta Stakeholder Meeting',
+          form: "Event",
+          country: "Vietnam",
+          time: "Feb 27",
+        },
+      ];
+
+      let logData = [...LOG_BASE];
+      let filteredLog = [...logData];
+
+      function addToLog(action, formType, id, synced) {
+        const ftMap = {
+          event: "Event",
+          participant: "Participant",
+          survey: "Survey",
+          indicator: "Indicator",
+        };
+        logData.unshift({
+          user: "Sophea Rith",
+          role: "MEAL Officer · KH",
+          av: "c1",
+          action: synced ? "sb" : action,
+          desc: `${synced ? "Synced" : "Submitted"} <span class="ht">${id}</span> — ${ftMap[formType] || formType} form`,
+          form: ftMap[formType] || formType,
+          country: "Cambodia",
+          time: "Just now",
+        });
+        filteredLog = [...logData];
+        renderLog(filteredLog);
+      }
+
+      function renderLog(data) {
+        const el = document.getElementById("log-rows");
+        if (!data.length) {
+          el.innerHTML =
+            '<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">No results found</div></div>';
+          return;
+        }
+        const aLabels = {
+          cr: "Create",
+          ed: "Edit",
+          dl: "Delete",
+          vw: "View",
+          sb: "Synced",
+          up: "Update",
+        };
+        el.innerHTML = data
+          .map(
+            (r, i) => `
+    <div class="lt-row" style="animation-delay:${i * 0.025}s">
+      <div class="lu">
+        <div class="lav ${r.av}">${r.user
+          .split(" ")
+          .map((n) => n[0])
+          .join("")}</div>
+        <div><div class="lu-n">${r.user}</div><div class="lu-r">${r.role}</div></div>
+      </div>
+      <div><span class="abadge ${r.action}">${aLabels[r.action] || r.action}</span></div>
+      <div class="ld">${r.desc}</div>
+      <div class="lt-ctry"><span class="ctg">${r.country}</span></div>
+      <div class="lt-form"><span class="ftg">${r.form}</span></div>
+      <div class="lt-time">${r.time}</div>
+    </div>`,
+          )
+          .join("");
+      }
+
+      function filterLog(type, btn) {
+        document
+          .querySelectorAll(".fchip")
+          .forEach((c) => c.classList.remove("on"));
+        btn.classList.add("on");
+        STATE.logFilter = type;
+        applyLogFilter();
+      }
+
+      function searchLog(q) {
+        STATE.logSearch = q.toLowerCase();
+        applyLogFilter();
+      }
+
+      function applyLogFilter() {
+        filteredLog = logData.filter((r) => {
+          const matchType =
+            STATE.logFilter === "all" || r.action === STATE.logFilter;
+          const q = STATE.logSearch;
+          const matchSearch =
+            !q ||
+            r.user.toLowerCase().includes(q) ||
+            r.country.toLowerCase().includes(q) ||
+            r.desc.toLowerCase().includes(q);
+          return matchType && matchSearch;
+        });
+        renderLog(filteredLog);
+      }
+
+      // ─── BAR CHART ────────────────────────────────────────────────────────────
+      function renderBarChart() {
+        const data = [
+          { label: "IND-01 Water Access", pct: 77, color: "" },
+          { label: "IND-02 Governance", pct: 58, color: "amber" },
+          { label: "IND-03 Climate", pct: 68, color: "" },
+          { label: "IND-04 Women Lead", pct: 82, color: "" },
+          { label: "IND-05 Action Plans", pct: 51, color: "amber" },
+          { label: "IND-06 Partners", pct: 72, color: "" },
+          { label: "IND-07 Youth", pct: 64, color: "blue" },
+        ];
+        const el = document.getElementById("bar-chart");
+        el.innerHTML = data
+          .map(
+            (d) => `
+    <div class="bar-row">
+      <div class="bar-label">${d.label}</div>
+      <div class="bar-track"><div class="bar-fill ${d.color}" style="width:0%" data-w="${d.pct}%"></div></div>
+      <div class="bar-val">${d.pct}%</div>
+    </div>`,
+          )
+          .join("");
+        setTimeout(
+          () =>
+            el
+              .querySelectorAll(".bar-fill")
+              .forEach((b) => (b.style.width = b.dataset.w)),
+          100,
+        );
+      }
+
+      // ─── TOAST ───────────────────────────────────────────────────────────────
+      let toastCount = 0;
+      function showToast(msg, type = "success") {
+        const wrap = document.getElementById("toast-wrap");
+        const t = document.createElement("div");
+        t.className = `toast ${type}`;
+        t.innerHTML = msg;
+        wrap.appendChild(t);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => t.classList.add("show"));
+        });
+        setTimeout(() => {
+          t.classList.remove("show");
+          setTimeout(() => t.remove(), 400);
+        }, 3000);
+      }
+
+      // ─── INIT ────────────────────────────────────────────────────────────────
+      renderLog(logData);
+      renderBarChart();
+    </script>
+  </body>
+</html>
 
